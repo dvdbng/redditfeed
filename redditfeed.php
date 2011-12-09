@@ -38,6 +38,9 @@ function imgur_content($url){
         }else{
             return "UNKNOWN IMGUR URL $url";
         }
+    }else if(($host == "www.quickmeme.com" || $host == "quickmeme.com")
+                && preg_match("/^\/meme/([^\/]+)\//",$path,$matches)){
+        return "<img src='http://i.qkme.me/" . $matches[1] . ".jpg'/>";
     }
     return false;
 }
