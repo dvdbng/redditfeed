@@ -1,0 +1,83 @@
+#!/bin/bash
+
+cd /var/www/hoyga/r
+
+reddits="programming;100
+adviceanimals;1000
+fffffffuuuuuuuuuuuu;700
+music;1000
+listentothis;110
+electronicmusic;160
+movies;1100
+videos;1500
+pics;1500
+AskReddit;1000
+blog;0
+AskWomen;20
+Design;70
+explainlikeimfive;190
+firefox;10
+fitness;70
+es;20
+cogsci;200
+DesignPorn;20
+django;12
+browsers;10
+bicycling;100
+askseddit;10
+askscience;120
+fossworldproblems;20
+Frugal;100
+funny;1000
+greadergang;0
+freelance;10
+GetMotivated;30
+geek;500
+javascript;20
+kindle;20
+LifeProTips;40
+linux;100
+malefashionadvice;100
+introvert;50
+gainit;12
+MTB;30
+node;12
+NoFap;22
+opensource;50
+philosophy;80
+productivity;10
+Python;32
+science;500
+shutupandtakemymoney;400
+seduction;40
+snowboarding;40
+spain;4
+Survival;20
+technology;1000
+texttranscripts;10
+todayilearned;900
+travel;30
+typography;20
+Ubuntu;70
+UniSeddit;0
+vim;10
+vimcommands;10
+web_design;40
+webdev;30
+ZenHabits;10"
+
+sep=2
+if [ $# -ge 1 ]
+then
+    sep=$1
+fi
+
+for elm in $reddits
+do
+    data=(${elm//;/ })
+    reddit=${data[0]}
+    ups=${data[1]}
+    echo "Procesando feed $reddit"
+    curl -s "http://hoyga.com/redditfeed/redditfeed.php?reddit=$reddit&ups=$ups" > "$reddit.xml"
+    sleep $sep
+done
