@@ -27,7 +27,7 @@ function get_reddit_data($reddit){
 function imgur_content($url){
     $parts = parse_url($url);
     $host = $parts["host"];
-    $path = $parts["path"];
+    $path = isset($parts["path"])?$parts["path"]:"";
     if($host == "i.imgur.com"){
         return "<img src='$url'/>";
     }else if($host == "imgur.com"){
