@@ -3,8 +3,15 @@
 cd /var/www/hoyga/r
 
 reddits="programming;100
+worldnews;700
+atheism;1400
+comics;1400
+gadgets;100
+wikipedia;300
+ProjectReddit;100
+ProjectEnrichment;40
 adviceanimals;1000
-fffffffuuuuuuuuuuuu;700
+fffffffuuuuuuuuuuuu;800
 music;1000
 listentothis;110
 electronicmusic;160
@@ -28,7 +35,7 @@ askseddit;10
 askscience;120
 fossworldproblems;20
 Frugal;100
-funny;1000
+funny;1100
 greadergang;0
 freelance;10
 GetMotivated;30
