@@ -3,6 +3,7 @@
 cd /var/www/hoyga/r
 
 reddits="programming;100
+Documentaries;150
 worldnews;700
 atheism;1400
 comics;1400
