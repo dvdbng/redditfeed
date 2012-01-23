@@ -3,6 +3,7 @@
 cd /var/www/hoyga/r
 
 reddits="programming;100
+BuyItForLife;50
 Documentaries;150
 Health;150
 engineering;150
