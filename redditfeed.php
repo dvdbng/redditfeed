@@ -87,6 +87,28 @@ function get_mime_url($url){
     return "???";
 }
 
+function get_page($url){
+    try{
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL,            $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT,        20000);
+        $r = curl_exec($ch);
+        $curl_errno = curl_errno($ch);
+        $curl_error = curl_error($ch);
+        curl_close($ch);
+
+        if ($curl_errno > 0) {
+            return array(true,"cURL Error ($curl_errno): $curl_error\n");
+        } else {
+            return array(false,$r);
+        }
+
+    }catch(Exception $e){
+        return array(true,"Error ".$e);
+    }
+}
+
 function get_content_nocache($url){
     if($imgur = imgur_content($url)){
         return $imgur;
@@ -104,7 +126,11 @@ function get_content_nocache($url){
         return file_get_contents($url);
     }else if(strpos($mime,"text/html")===0 || strpos($mime,"application/xhtml+xml")===0 || strpos($mime,"application/xml")===0){
         try{
-            $html = @file_get_contents($url);
+            $r = get_page($url);
+            if($r[0]){ // Error
+                return $r[1];
+            }
+            $html = $r[1];
             if (function_exists('tidy_parse_string')) {
                     $tidy = tidy_parse_string($html, array('indent'=>true), 'UTF8');
                     $tidy->cleanRepair();
