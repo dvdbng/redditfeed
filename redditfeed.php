@@ -93,6 +93,7 @@ function get_page($url){
         curl_setopt($ch, CURLOPT_URL,            $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_TIMEOUT,        20000);
+        curl_setopt($ch, CURLOPT_ENCODING,     "gzip");
         $r = curl_exec($ch);
         $curl_errno = curl_errno($ch);
         $curl_error = curl_error($ch);
