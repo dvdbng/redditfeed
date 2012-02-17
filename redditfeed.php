@@ -52,7 +52,7 @@ function oembed($url){
 
     switch($res['type']) {
         case 'photo':
-            return '<img src="' . $res['url'] . '" alt="' . ($res['title']||"") . '"/>';
+            return '<img src="' . $res['url'] . '" alt="' . (isset($res['title'])?$res['title']:"") . '"/>';
         case 'rich':
         case 'video':
             return $res['html'];
