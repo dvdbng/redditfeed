@@ -172,16 +172,20 @@ function get_content($url){
     return $content;
 }
 
-function render_comments($list){
+function render_comments($list, $odd){
     $res =  "";
+    $color = $odd?"#eee":"#ccc";
     foreach($list as $item){
         if($item["kind"] == "t1"){
             $data = $item["data"];
-            $res .= '<div style="padding-left: 10px; border-left: 1px dotted #ccc">';
-            $res .= "<a href='http://www.reddit.com/user/{$data['author']}'>{$data['author']}</a>:";
-            $res .= html_entity_decode($data["body_html"]);
+
+            $header = "<div style='padding: 10px; background-color: $color;'><p>";
+            $header .= "<a href='http://www.reddit.com/user/{$data['author']}'>{$data['author']}</a> (<span style='color: #c4790b;'>{$data["ups"]}</span>/<span style='color: #1f5f7b;'>{$data["downs"]}</span>) : ";
+
+            $res .= preg_replace('/^<div class="md"><p>/', $header, html_entity_decode($data["body_html"]));
+
             if(isset($data["replies"]) && isset($data["replies"]["kind"]) && $data["replies"]["kind"] == "Listing"){
-                $res .= render_comments($data["replies"]["data"]["children"]);
+                $res .= render_comments($data["replies"]["data"]["children"], !$odd);
             }
             $res .= "</div>";
         }
@@ -201,7 +205,7 @@ function get_comments($permalink){
         return "Comments Error: " . $r[1];
     }else{
         $jd = json_decode($r[1],true);
-        $coms = render_comments($jd[1]["data"]["children"]);
+        $coms = render_comments($jd[1]["data"]["children"], false);
 
         $com_cache->save($coms, $permalink);
         return $coms;
