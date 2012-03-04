@@ -177,12 +177,13 @@ function render_comments($list){
     foreach($list as $item){
         if($item["kind"] == "t1"){
             $data = $item["data"];
-            $res .= '<div style="margin-left: 10px; border-left: 1px dotted #ccc">';
+            $res .= '<div style="padding-left: 10px; border-left: 1px dotted #ccc">';
             $res .= "<a href='http://www.reddit.com/user/{$data['author']}'>{$data['author']}</a>:";
             $res .= html_entity_decode($data["body_html"]);
             if(isset($data["replies"]) && isset($data["replies"]["kind"]) && $data["replies"]["kind"] == "Listing"){
                 $res .= render_comments($data["replies"]["data"]["children"]);
             }
+            $res .= "</div>";
         }
     }
     return $res;
@@ -195,7 +196,7 @@ function get_comments($permalink){
         return $coms;
     }
 
-    $r = get_page("http://www.reddit.com$permalink.json");
+    $r = get_page("http://www.reddit.com$permalink?limit=20.json");
     if($r[0]){
         return "Comments Error: " . $r[1];
     }else{
