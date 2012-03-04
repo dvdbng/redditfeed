@@ -18,6 +18,11 @@ $cache = new Cache_Lite(array(
     'lifeTime' => 60*60*24*3,
 ));
 
+$com_cache = new Cache_Lite(array(
+    'cacheDir' => '/tmp/',
+    'lifeTime' => 60*60*2,
+));
+
 function get_reddit_data($reddit){
     $data = json_decode(file_get_contents("http://www.reddit.com/r/$reddit.json"),true);
     $data = $data["data"]["children"];
@@ -93,7 +98,10 @@ function get_page($url){
         curl_setopt($ch, CURLOPT_URL,            $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_TIMEOUT,        20000);
-        curl_setopt($ch, CURLOPT_ENCODING,     "gzip");
+        curl_setopt($ch, CURLOPT_ENCODING,       "gzip");
+        curl_setopt($ch, CURLOPT_MAXREDIRS,      5);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+
         $r = curl_exec($ch);
         $curl_errno = curl_errno($ch);
         $curl_error = curl_error($ch);
@@ -164,6 +172,40 @@ function get_content($url){
     return $content;
 }
 
+function render_comments($list){
+    $res =  "";
+    foreach($list as $item){
+        $data = $item["data"];
+        $res .= '<div style="margin-left: 10px; border-left: 1px dotted #ccc">';
+        $res .= "<a href='http://www.reddit.com/user/{$data['author']}'>{$data['author']}</a>:";
+        $res .= html_entity_decode($data["body_html"]);
+        //echo var_dump($data["replies"]);
+        if(isset($data["replies"]) && isset($data["replies"]["kind"]) && $data["replies"]["kind"] == "Listing"){
+            $res .= render_comments($data["replies"]["data"]["children"]);
+        }
+    }
+    return $res;
+}
+
+function get_comments($permalink){
+    global $com_cache;
+    $coms = $com_cache->get($permalink);
+    if($coms){
+        return $coms;
+    }
+
+    $r = get_page("http://www.reddit.com$permalink.json");
+    if($r[0]){
+        return "Comments Error: " . $r[1];
+    }else{
+        $jd = json_decode($r[1],true);
+        $coms = render_comments($jd[1]["data"]["children"]);
+
+        $com_cache->save($coms, $permalink);
+        return $coms;
+    }
+}
+
 function edit_common($data){
     extract($data);
     $trans = array(
@@ -176,6 +218,7 @@ function edit_common($data){
     }else{
         $content = get_content($url);
     }
+    $content .= '<br/>' . get_comments($permalink);
 
     $data["guid"] = md5($url);
     $data["description"] = $content . "<br/>
