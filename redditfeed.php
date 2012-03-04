@@ -196,7 +196,7 @@ function get_comments($permalink){
         return $coms;
     }
 
-    $r = get_page("http://www.reddit.com$permalink?limit=20.json");
+    $r = get_page("http://www.reddit.com$permalink.json?limit=20");
     if($r[0]){
         return "Comments Error: " . $r[1];
     }else{
