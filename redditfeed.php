@@ -179,8 +179,8 @@ function render_comments($list, $odd){
         if($item["kind"] == "t1"){
             $data = $item["data"];
 
-            $header = "<div style='padding: 10px; background-color: $color;'><p>";
-            $header .= "<a href='http://www.reddit.com/user/{$data['author']}'>{$data['author']}</a> (<span style='color: #c4790b;'>{$data["ups"]}</span>/<span style='color: #1f5f7b;'>{$data["downs"]}</span>) : ";
+            $res .= "<div style='padding: 5px; margin-left: 10px; background-color: $color;'>";
+            $header = "<a href='http://www.reddit.com/user/{$data['author']}'>{$data['author']}</a> (<span style='color: #c4790b;'>{$data["ups"]}</span>/<span style='color: #1f5f7b;'>{$data["downs"]}</span>) : ";
 
             $res .= preg_replace('/^<div class="md"><p>/', $header, html_entity_decode($data["body_html"]));
 
