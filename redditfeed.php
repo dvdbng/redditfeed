@@ -175,13 +175,14 @@ function get_content($url){
 function render_comments($list){
     $res =  "";
     foreach($list as $item){
-        $data = $item["data"];
-        $res .= '<div style="margin-left: 10px; border-left: 1px dotted #ccc">';
-        $res .= "<a href='http://www.reddit.com/user/{$data['author']}'>{$data['author']}</a>:";
-        $res .= html_entity_decode($data["body_html"]);
-        //echo var_dump($data["replies"]);
-        if(isset($data["replies"]) && isset($data["replies"]["kind"]) && $data["replies"]["kind"] == "Listing"){
-            $res .= render_comments($data["replies"]["data"]["children"]);
+        if($item["kind"] == "t1"){
+            $data = $item["data"];
+            $res .= '<div style="margin-left: 10px; border-left: 1px dotted #ccc">';
+            $res .= "<a href='http://www.reddit.com/user/{$data['author']}'>{$data['author']}</a>:";
+            $res .= html_entity_decode($data["body_html"]);
+            if(isset($data["replies"]) && isset($data["replies"]["kind"]) && $data["replies"]["kind"] == "Listing"){
+                $res .= render_comments($data["replies"]["data"]["children"]);
+            }
         }
     }
     return $res;
@@ -218,7 +219,7 @@ function edit_common($data){
     }else{
         $content = get_content($url);
     }
-    $content .= '<br/>' . get_comments($permalink);
+    $content .= '<hr/>' . get_comments($permalink);
 
     $data["guid"] = md5($url);
     $data["description"] = $content . "<br/>
