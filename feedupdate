@@ -4,6 +4,7 @@ cd /var/www/hoyga/r
 
 reddits="programming;100
 Entrepreneur;50
+firefoxCoders;0
 GetOutOfBed;10
 investing;70
 marketing;10
@@ -47,18 +48,18 @@ fossworldproblems;20
 Frugal;100
 greadergang;0
 freelance;10
-GetMotivated;30
+GetMotivated;120
 geek;500
 javascript;20
 kindle;20
-LifeProTips;40
+LifeProTips;300
 linux;100
 malefashionadvice;100
 introvert;50
 gainit;12
 MTB;30
 node;12
-NoFap;22
+NoFap;90
 opensource;50
 philosophy;80
 productivity;10
