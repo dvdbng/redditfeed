@@ -55,12 +55,12 @@ function oembed($url){
     global $embedapi;
     $res = $embedapi->oembed($url);
 
-    switch($res['type']) {
+    switch($res->type) {
         case 'photo':
-            return '<img src="' . $res['url'] . '" alt="' . (isset($res['title'])?$res['title']:"") . '"/>';
+            return '<img src="' . $res->url . '" alt="' . (isset($res->title)?$res->title:"") . '"/>';
         case 'rich':
         case 'video':
-            return $res['html'];
+            return $res->html;
         case 'link':
         case 'error':
         default:
