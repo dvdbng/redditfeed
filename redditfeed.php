@@ -8,6 +8,8 @@ require_once "Readability.php";
 require_once "Embedly.php";
 require_once "Cache/Lite.php";
 
+$img_style = 'style="max-width: 500px;"';
+
 $embedapi = new Embedly\Embedly(array(
     'key' => EMBEDLY_KEY,
     'user_agent' => 'Mozilla/5.0 (compatible; redditfeed/1.0)'
@@ -25,11 +27,12 @@ function get_reddit_data($reddit){
 }
 
 function imgur_content($url){
+    global $img_style;
     $parts = parse_url($url);
     $host = $parts["host"];
     $path = isset($parts["path"])?$parts["path"]:"";
     if($host == "i.imgur.com"){
-        return "<img src='$url'/>";
+        return "<img $img_style src='$url'/>";
     }else if($host == "imgur.com"){
         if(strpos($path,"/a/")===0){
             return "<a href='$url'>IMGUR ALBUM</a>";
@@ -39,20 +42,21 @@ function imgur_content($url){
             return "UNKNOWN IMGUR URL $url";
         }
     }else if(($host == "www.quickmeme.com" || $host == "quickmeme.com") && preg_match("/^\/meme\/([^\/]+)\//",$path,$matches)){
-        return "<img src='http://i.qkme.me/" . $matches[1] . ".jpg'/>";
+        return "<img $img_style src='http://i.qkme.me/" . $matches[1] . ".jpg'/>";
     }else if($host == "qkme.me" && strpos($path,"/",1) === false){
-        return "<img src='http://i.qkme.me/" . substr($path,1) . ".jpg'/>";
+        return "<img $img_style src='http://i.qkme.me/" . substr($path,1) . ".jpg'/>";
     }
     return false;
 }
 
 function oembed($url){
+    global $img_style;
     global $embedapi;
     $res = $embedapi->oembed($url);
 
     switch($res['type']) {
         case 'photo':
-            return '<img src="' . $res['url'] . '" alt="' . (isset($res['title'])?$res['title']:"") . '"/>';
+            return '<img $img_style src="' . $res['url'] . '" alt="' . (isset($res['title'])?$res['title']:"") . '"/>';
         case 'rich':
         case 'video':
             return $res['html'];
