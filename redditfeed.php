@@ -42,7 +42,7 @@ function imgur_content($url){
         if(strpos($path,"/a/")===0){
             return "<a href='$url'>IMGUR ALBUM</a>";
         }else if(strpos($path,"/",1) === false){
-            return "<img src='http://i.imgur.com/" . substr($path,1) . ".png'/>";
+            return "<img $img_style src='http://i.imgur.com/" . substr($path,1) . ".png'/>";
         }else{
             return "UNKNOWN IMGUR URL $url";
         }
@@ -130,11 +130,12 @@ function get_content_nocache($url){
     if($oembed = oembed($url)){
         return $oembed;
     }
+    global $img_style;
 
 
     $mime = get_mime_url($url);
     if(strpos($mime,"image/")===0){
-        return "<img src='$url'/>";
+        return "<img $img_style src='$url'/>";
     }else if(strpos($mime,"text/plain")===0){
         return file_get_contents($url);
     }else if(strpos($mime,"text/html")===0 || strpos($mime,"application/xhtml+xml")===0 || strpos($mime,"application/xml")===0){
