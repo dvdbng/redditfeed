@@ -3,6 +3,9 @@
 cd /var/www/hoyga/r
 
 reddits="programming;100
+Southampton;0
+unitedkingdom;250
+london;200
 Entrepreneur;50
 howtonotgiveafuck;150
 firefoxCoders;0
