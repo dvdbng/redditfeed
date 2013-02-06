@@ -112,7 +112,7 @@ class Readability
 		/* Note, this is pretty costly as far as processing goes. Maybe optimize later. */
 		$html = preg_replace($this->regexps['replaceBrs'], '</p><p>', $html);
 		$html = preg_replace($this->regexps['replaceFonts'], '<$1span>', $html);
-		//$html = mb_convert_encoding($html, 'HTML-ENTITIES', "UTF-8");
+		$html = mb_convert_encoding($html, 'HTML-ENTITIES', "UTF-8");
 		$this->dom = new DOMDocument();
 		$this->dom->preserveWhiteSpace = false;
 		$this->dom->registerNodeClass('DOMElement', 'JSLikeHTMLElement');
