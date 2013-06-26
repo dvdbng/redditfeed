@@ -177,22 +177,21 @@ function get_content($url){
     return $content;
 }
 
-function render_comments($list, $odd){
+function render_comments($list){
     $res =  "";
-    $color = $odd?"#eee":"#ccc";
     foreach($list as $item){
         if($item["kind"] == "t1"){
             $data = $item["data"];
 
-            $res .= "<div style='padding: 5px; margin-left: 10px; background-color: $color;'>";
-            $header = "<div><p><a href='http://www.reddit.com/user/{$data['author']}'>{$data['author']}</a> (<span style='color: #c4790b;'>{$data["ups"]}</span>/<span style='color: #1f5f7b;'>{$data["downs"]}</span>) : ";
+            $res .= "<blockquote>";
+            $header = "<div><\$1><a href='http://www.reddit.com/user/{$data['author']}'>{$data['author']}</a> ({$data["ups"]}/{$data["downs"]}) : ";
 
-            $res .= preg_replace('/^<div class="md"><p>/', $header, html_entity_decode($data["body_html"]));
+            $res .= preg_replace('/^<div class="md"><([^>]+)>/', $header, html_entity_decode($data["body_html"]));
 
             if(isset($data["replies"]) && isset($data["replies"]["kind"]) && $data["replies"]["kind"] == "Listing"){
-                $res .= render_comments($data["replies"]["data"]["children"], !$odd);
+                $res .= render_comments($data["replies"]["data"]["children"]);
             }
-            $res .= "</div>";
+            $res .= "</blockquote>";
         }
     }
     return $res;
@@ -229,13 +228,14 @@ function edit_common($data){
     }else{
         $content = get_content($url);
     }
-    $content .= '<hr/>' . get_comments($permalink);
-
-    $data["guid"] = md5($url);
-    $data["description"] = $content . "<br/>
+    $content .= "<hr/>
         Score: $score ($ups/$downs)<br/>
         Author: <a href='http://www.reddit.com/user/$author'>$author</a><br/>
         <a href='$url'>Link</a> - <a href='http://reddit.com$permalink'>Comments</a> ($num_comments)";
+    $content .= '<hr/>' . get_comments($permalink);
+
+    $data["guid"] = md5($url);
+    $data["description"] = $content;
     $data["description"] = strtr($data["description"],$trans);
 
     $data["author"] = htmlspecialchars($author);
