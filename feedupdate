@@ -3,6 +3,14 @@
 cd /var/www/hoyga/r
 
 reddits="programming;100
+DIY;1500
+woodworking;1200
+AskHistorians;800
+DepthHub;200
+German;30
+Futurology;1000
+europe;300
+Showerthoughts;3000
 budgetfood;50
 UKFrugal;5
 gamedev;120
