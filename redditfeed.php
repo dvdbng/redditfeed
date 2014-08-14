@@ -261,7 +261,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
     <title>Reddit feed for <?php echo $subreddit; ?></title>
         <description>Reddit feed</description>
         <link>http://reddit.com/r/<?php echo $subreddit; ?></link>
-<?php foreach($items as $k=>$v): ?>
+<?php if($items): foreach($items as $k=>$v): ?>
         <item>
             <title><?php echo $v["title"]; ?></title>
             <link><?php echo htmlspecialchars($v["url"]); ?></link>
@@ -269,6 +269,6 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
             <author><?php echo "{$v['author']}@reddit.com ({$v['author']})"?></author>
             <guid isPermaLink="false"><?php echo htmlspecialchars($v["guid"]); ?></guid>
         </item>
-<?php endforeach; ?>
+<?php endforeach; endif; ?>
     </channel>
 </rss>
