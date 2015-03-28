@@ -1,2 +1,2 @@
-ssh hoyga '(cd /var/www/hoyga/redditfeed; git pull)'
-scp config.php hoyga:/var/www/hoyga/redditfeed
+ssh ovh '(cd /var/www/hoyga/redditfeed; git pull)'
+scp config.php ovh:/var/www/hoyga/redditfeed
