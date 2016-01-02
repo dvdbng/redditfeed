@@ -12,7 +12,7 @@ dlr(){
     reddit=$1
     ups=$2
     echo "Procesando feed $reddit"
-    php /var/www/hoyga/reddirfeed/redditfeed.php "$reddit" "$ups" > "$reddit.xml"
+    php /var/www/hoyga/redditfeed/redditfeed.php "$reddit" "$ups" > "$reddit.xml"
     sleep $sep
 }
 
