@@ -8,13 +8,28 @@ then
     sep=$1
 fi
 
+echo '<?xml version="1.0" encoding="UTF-8"?>
+
+<opml version="1.0">
+    <head>
+        <title>Reddit feed subs</title>
+    </head>
+    <body>
+        <outline text="reddit" title="reddit">' > feeds.opml
+
 dlr(){
     reddit=$1
     ups=$2
     echo "Procesando feed $reddit"
     php /var/www/hoyga/redditfeed/redditfeed.php "$reddit" "$ups" > "$reddit.xml"
+
+    echo "<outline type='rss' text='Reddit feed for $reddit' title='Reddit feed for $reddit' xmlUrl='http://hoyga.com/r/${reddit}.xml' htmlUrl='http://reddit.com/r/$reddit'/>" >> feeds.opml
     sleep $sep
 }
+echo "
+        </outline>
+    </body>
+</opml>" >> feeds.opml
 
 # copy(Array.from($('#sr-header-area .drop-choices .choice')).map(x => x.textContent.toLowerCase()).sort().join('\n'))
 
