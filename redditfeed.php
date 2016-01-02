@@ -243,8 +243,17 @@ function edit_common($data){
     return $data;
 }
 
-$subreddit = $_GET["reddit"];
-$minscore = $_GET["ups"];
+function get_arg($name, $n) {
+    if(isset($_GET[$name])) {
+        return $_GET[$name];
+    }
+    if(isset($argv[$n])) {
+        return $argv[$n];
+    }
+}
+
+$subreddit = get_arg("reddit", 1);
+$minscore = get_arg("ups", 1);
 
 foreach(get_reddit_data($subreddit) as $k=>$v){
     $data = $v["data"];

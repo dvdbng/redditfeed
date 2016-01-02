@@ -2,97 +2,105 @@
 
 cd /var/www/hoyga/r
 
-reddits="programming;100
-hitchhiking;9
-thoriumreactor;6
-DIY;1500
-woodworking;1200
-AskHistorians;800
-DepthHub;200
-Futurology;1000
-europe;300
-Showerthoughts;3000
-budgetfood;50
-UKFrugal;5
-gamedev;120
-getdisciplined;25
-Entrepreneur;70
-firefoxCoders;0
-GetOutOfBed;40
-investing;140
-marketing;40
-SEO;35
-startups;30
-BuyItForLife;100
-Documentaries;200
-Health;150
-engineering;150
-Physics;150
-compsci;50
-worldnews;750
-atheism;3000
-comics;1500
-gadgets;100
-wikipedia;300
-meditation;80
-music;1500
-videos;3000
-AskReddit;2000
-blog;0
-AskWomen;300
-Design;70
-explainlikeimfive;300
-firefox;20
-fitness;200
-es;20
-cogsci;200
-DesignPorn;40
-django;12
-browsers;10
-bicycling;300
-askscience;130
-fossworldproblems;30
-Frugal;250
-freelance;10
-GetMotivated;400
-geek;1000
-javascript;20
-LifeProTips;2000
-linux;200
-malefashionadvice;300
-gainit;100
-MTB;50
-node;12
-opensource;100
-philosophy;140
-productivity;40
-Python;32
-science;520
-shutupandtakemymoney;500
-snowboarding;200
-spain;10
-Survival;100
-technology;1200
-todayilearned;2000
-travel;60
-typography;40
-Ubuntu;100
-vim;20
-web_design;50
-webdev;40"
-
 sep=2
 if [ $# -ge 1 ]
 then
     sep=$1
 fi
 
-for elm in $reddits
-do
-    data=(${elm//;/ })
-    reddit=${data[0]}
-    ups=${data[1]}
+dlr(){
+    reddit=$1
+    ups=$2
     echo "Procesando feed $reddit"
-    curl -s "http://hoyga.com/redditfeed/redditfeed.php?reddit=$reddit&ups=$ups" > "$reddit.xml"
+    php /var/www/hoyga/reddirfeed/redditfeed.php "$reddit" "$ups" > "$reddit.xml"
     sleep $sep
-done
+}
+
+# copy(Array.from($('#sr-header-area .drop-choices .choice')).map(x => x.textContent.toLowerCase()).sort().join('\n'))
+
+dlr askhistorians 800
+dlr askreddit 2000
+dlr askscience 130
+dlr askwomen 300
+dlr atheism 3000
+dlr bicycling 300
+dlr bitcoin 500
+dlr blog 0
+dlr browsers 10
+dlr budgetfood 50
+dlr buyitforlife 100
+dlr cogsci 200
+dlr comics 1500
+dlr compsci 50
+dlr dataisbeautiful 1000
+dlr depthhub 200
+dlr design 70
+dlr designporn 40
+dlr digitalnomad 30
+dlr diy 1500
+dlr django 12
+dlr documentaries 200
+dlr engineering 150
+dlr entrepreneur 70
+dlr es 20
+dlr europe 300
+dlr explainlikeimfive 300
+dlr firefox 20
+dlr firefoxcoders 0
+dlr fitness 200
+dlr fossworldproblems 30
+dlr freelance 10
+dlr frugal 250
+dlr futurology 1000
+dlr gadgets 100
+dlr gainit 100
+dlr gamedev 120
+dlr geek 1000
+dlr getdisciplined 25
+dlr getmotivated 400
+dlr getoutofbed 40
+dlr health 150
+dlr hitchhiking 9
+dlr investing 140
+dlr javascript 20
+dlr lifeprotips 2000
+dlr linux 200
+dlr malefashionadvice 300
+dlr marketing 40
+dlr meditation 80
+dlr mtb 50
+dlr music 1500
+dlr node 12
+dlr opensource 100
+dlr philosophy 140
+dlr physics 150
+dlr productivity 40
+dlr programming 100
+dlr python 32
+dlr science 520
+dlr selfdrivingcars 15
+dlr seo 35
+dlr showerthoughts 3000
+dlr shutupandtakemymoney 500
+dlr snowboarding 200
+dlr somebodymakethis 5
+dlr spacex 150
+dlr spain 10
+dlr startups 30
+dlr survival 100
+dlr technology 1200
+dlr ted 50
+dlr thoriumreactor 6
+dlr todayilearned 2000
+dlr travel 60
+dlr typography 40
+dlr ubuntu 100
+dlr ukfrugal 5
+dlr videos 3000
+dlr vim 20
+dlr web_design 50
+dlr webdev 40
+dlr wikipedia 300
+dlr woodworking 1200
+dlr worldnews 750
+
