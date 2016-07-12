@@ -36,7 +36,7 @@ function imgur_content($url){
     $parts = parse_url($url);
     $host = $parts["host"];
     $path = isset($parts["path"])?$parts["path"]:"";
-    if($host == "i.imgur.com"){
+    if($host == "i.imgur.com" || $host == "i.reddituploads.com"){
         return "<img $img_style src='$url'/>";
     }else if($host == "imgur.com"){
         if(strpos($path,"/a/")===0){
@@ -275,7 +275,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 <?php if($items): foreach($items as $k=>$v): ?>
         <item>
             <title><?php echo $v["title"]; ?></title>
-            <link><?php echo htmlspecialchars($v["url"]); ?></link>
+            <link><?php echo $v["url"]; ?></link>
             <description><?php echo $v["description"]; ?></description>
             <author><?php echo "{$v['author']}@reddit.com ({$v['author']})"?></author>
             <guid isPermaLink="false"><?php echo htmlspecialchars($v["guid"]); ?></guid>
