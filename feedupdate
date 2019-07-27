@@ -21,7 +21,7 @@ dlr(){
     reddit=$1
     ups=$2
     echo "Procesando feed $reddit"
-    php /var/www/hoyga/redditfeed/redditfeed.php "$reddit" "$ups" > "$reddit.xml"
+    curl "https://feedly.dvdbng.com/r/$reddit.xml?votes=$2" > "$reddit.xml"
 
     echo "<outline type='rss' text='Reddit feed for $reddit' title='Reddit feed for $reddit' xmlUrl='http://hoyga.com/r/${reddit}.xml' htmlUrl='http://reddit.com/r/$reddit'/>" >> feeds.opml
     sleep $sep
@@ -37,87 +37,58 @@ dlr askwomen 300
 dlr atheism 3000
 dlr bitcoin 500
 dlr blog 0
-dlr browsers 13
 dlr btc 400
-dlr budgetfood 50
-dlr buyitforlife 100
-dlr cogsci 200
-dlr comics 1500
-dlr compsci 50
 dlr cryptocurrency 300
 dlr dataisbeautiful 1000
 dlr depthhub 200
-dlr design 70
-dlr designporn 40
 dlr digitalnomad 30
 dlr diy 1500
-dlr django 12
 dlr documentaries 200
 dlr engineering 150
 dlr entrepreneur 70
-dlr es 20
 dlr ethtrader 100
 dlr europe 500
 dlr explainlikeimfive 300
-dlr firefox 100
+dlr firefox 200
 dlr firefoxcoders 0
-dlr fitness 200
-dlr fossworldproblems 60
-dlr freelance 10
-dlr frugal 450
+dlr frugal 650
 dlr futurology 1000
-dlr gadgets 100
-dlr gainit 100
-dlr gamedev 120
-dlr geek 1000
-dlr getdisciplined 25
-dlr getmotivated 400
-dlr getoutofbed 40
-dlr health 150
-dlr hitchhiking 15
+dlr gadgets 200
+dlr geek 1200
+dlr health 170
 dlr investing 240
-dlr iota 100
-dlr javascript 40
-dlr lifeprotips 2200
-dlr linux 200
-dlr machinelearning 10
-dlr marketing 40
-dlr meditation 80
-dlr music 1500
-dlr node 22
-dlr opensource 150
-dlr philosophy 140
-dlr physics 150
-dlr productivity 40
+dlr iota 200
+dlr javascript 90
+dlr lifeprotips 2800
+dlr linux 300
+dlr machinelearning 100
+dlr marketing 150
+dlr music 1900
+dlr physics 200
 dlr programming 100
-dlr python 32
-dlr raiblocks 100
-dlr science 520
-dlr selfdrivingcars 15
-dlr seo 35
-dlr showerthoughts 3000
-dlr shutupandtakemymoney 500
-dlr somebodymakethis 5
-dlr spacex 130
-dlr spacexlounge 50
-dlr spain 10
-dlr startups 30
-dlr survival 230
+dlr python 50
+dlr nanocurrency 170
+dlr science 570
+dlr selfdrivingcars 50
+dlr showerthoughts 3500
+dlr spacex 200
+dlr spacexlounge 150
+dlr spain 100
+dlr startups 100
+dlr survival 500
 dlr technology 1200
 dlr ted 50
 dlr thoriumreactor 12
-dlr todayilearned 2000
-dlr travel 220
-dlr typography 40
-dlr ubuntu 300
+dlr todayilearned 2300
+dlr travel 500
+dlr typography 100
+dlr ubuntu 500
 dlr videos 3000
-dlr vim 30
+dlr vim 70
 dlr web_design 60
 dlr webdev 50
 dlr wikipedia 300
 dlr worldnews 750
-
-
 
 echo "
         </outline>
